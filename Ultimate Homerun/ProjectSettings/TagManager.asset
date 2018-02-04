@@ -13,8 +13,8 @@ TagManager:
   - UI
   - 
   - 
-  - 
-  - 
+  - Hittable
+  - Wall
   - 
   - 
   - 
@@ -40,6 +40,9 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Indicators
+    uniqueID: 2686300525
     locked: 0
   - name: Batter
     uniqueID: 1065580745
