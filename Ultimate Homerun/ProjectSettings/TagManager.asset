@@ -3,7 +3,8 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - FxTemporaire
   layers:
   - Default
   - TransparentFX
@@ -15,7 +16,7 @@ TagManager:
   - 
   - Hittable
   - Wall
-  - 
+  - Runner
   - 
   - 
   - 
@@ -49,4 +50,10 @@ TagManager:
     locked: 0
   - name: Baseball
     uniqueID: 3735365843
+    locked: 0
+  - name: FX
+    uniqueID: 1260669023
+    locked: 0
+  - name: UI
+    uniqueID: 2645457919
     locked: 0

@@ -5,9 +5,17 @@ using UnityEngine;
 public class BatterSwing : MonoBehaviour {
 
     private BatterMovement batterMovement;
+    private Animator batterAnimator;
 
     [SerializeField]
-    private float hitSpeed;
+    private GameObject swingHitEffect;
+    [SerializeField]
+    private ParticleSystem fullChargeEffect;
+
+    [SerializeField]
+    private float minHitSpeed;
+    [SerializeField]
+    private float maxHitSpeed;
     [SerializeField]
     private float hitRadius;
     [SerializeField]
@@ -17,45 +25,95 @@ public class BatterSwing : MonoBehaviour {
     [SerializeField]
     private float maxChargeTime;
     [SerializeField]
+    private float minChargeTimeForEffect;
+    [SerializeField]
     private float angularAcceleration;
 
+    private bool isCharging = false;
+    private bool isSwinging = false;
     private float chargeTime = 0;
 
     private void Awake() {
         batterMovement = GetComponent<BatterMovement>();
+        batterAnimator = GetComponent<Animator>();
     }
 
 	private void Update () {
+
         Vector3 mouseScreenPosition = Input.mousePosition;
         mouseScreenPosition.z = Camera.main.transform.position.z;
         Vector3 mousePosition = Camera.main.ScreenToWorldPoint(mouseScreenPosition);
         Vector2 directionToMouse = mousePosition - transform.position;
         float angleToMouse = Mathf.Atan2(directionToMouse.y, directionToMouse.x) * Mathf.Rad2Deg;
-        //Debug.Log("ANGLAY MOUSO " + angleToMouse);
         float nextAngle = Mathf.MoveTowardsAngle(transform.eulerAngles.z, angleToMouse - 90, angularAcceleration * Time.deltaTime);
-        //Debug.Log("NEXTO ANGLAY " + nextAngle);
         transform.eulerAngles = new Vector3(0, 0, nextAngle);
 
-        if (Input.GetMouseButton(0)) {
+        if (Input.GetMouseButtonDown(0)) {
+            isCharging = true;
+        }
+        if (Input.GetMouseButton(0) && !isSwinging) {
+            batterAnimator.SetTrigger("Wind Up");
             chargeTime += Time.deltaTime;
+            if (isCharging && chargeTime >= maxChargeTime) {
+                fullChargeEffect.Play();
+                isCharging = false;
+            }
             batterMovement.SetSpeedMultiplier(minSpeedMultiplier);
+
         } else if (Input.GetMouseButtonUp(0)) {
 
-            CameraController.Instance.ShakeCamera(0.125f, .5f);
-            TimeController.Instance.SlowTime(0f, 0.5f);
+            batterAnimator.SetTrigger("Swing");
+            batterAnimator.ResetTrigger("Wind Up");
+            StartCoroutine(ApplySwingDelay());
 
-            Collider2D[] objectsWithinSwingHitRadius = Physics2D.OverlapCircleAll(transform.position, hitRadius, LayerMask.GetMask("Hittable"));
-            for (int i = 0; i < objectsWithinSwingHitRadius.Length; i++) {
-                Vector2 directionToObject = objectsWithinSwingHitRadius[i].transform.position - transform.position;
-                float angleToObject = Mathf.Atan2(directionToObject.y, directionToObject.x) * Mathf.Rad2Deg;
-                if (Mathf.Abs(Mathf.DeltaAngle(angleToObject, angleToMouse)) <= (hitAngle / 2)) {
-                    objectsWithinSwingHitRadius[i].GetComponent<Rigidbody2D>().velocity = directionToObject.normalized * hitSpeed * Mathf.Clamp(chargeTime, 0, maxChargeTime) / maxChargeTime;
-                }
-            }
-            chargeTime = 0;
-            batterMovement.ResetSpeedMultiplier();
         }
-
         
     }
+
+    public void SwingBat() {
+        Vector3 mouseScreenPosition = Input.mousePosition;
+        mouseScreenPosition.z = Camera.main.transform.position.z;
+        Vector3 mousePosition = Camera.main.ScreenToWorldPoint(mouseScreenPosition);
+        Vector2 directionToMouse = mousePosition - transform.position;
+        float angleToMouse = Mathf.Atan2(directionToMouse.y, directionToMouse.x) * Mathf.Rad2Deg;
+
+        Collider2D[] objectsWithinSwingHitRadius = Physics2D.OverlapCircleAll(transform.position, hitRadius, LayerMask.GetMask("Hittable", "Runner"));
+        for (int i = 0; i < objectsWithinSwingHitRadius.Length; i++)
+        {
+            Vector2 directionToObject = objectsWithinSwingHitRadius[i].transform.position - transform.position;
+            float angleToObject = Mathf.Atan2(directionToObject.y, directionToObject.x) * Mathf.Rad2Deg;
+            if (Mathf.Abs(Mathf.DeltaAngle(angleToObject, angleToMouse)) <= (hitAngle / 2))
+            {
+                Instantiate(swingHitEffect, objectsWithinSwingHitRadius[i].transform.position, Quaternion.Euler(new Vector3(0, 0, angleToMouse - 90)));
+            }
+        }
+
+        if (objectsWithinSwingHitRadius.Length > 0) {
+            float effectMultiplier = Mathf.Clamp(chargeTime - minChargeTimeForEffect, 0, maxChargeTime - minChargeTimeForEffect) / (maxChargeTime - minChargeTimeForEffect);
+            CameraController.Instance.ShakeCamera(0.125f * effectMultiplier, .5f);
+            TimeController.Instance.SlowTime(0.01f, 0.5f * effectMultiplier);
+
+            for (int i = 0; i < objectsWithinSwingHitRadius.Length; i++)
+            {
+                Vector2 directionToObject = objectsWithinSwingHitRadius[i].transform.position - transform.position;
+                float angleToObject = Mathf.Atan2(directionToObject.y, directionToObject.x) * Mathf.Rad2Deg;
+                if (Mathf.Abs(Mathf.DeltaAngle(angleToObject, angleToMouse)) <= (hitAngle / 2))
+                {
+                    objectsWithinSwingHitRadius[i].GetComponent<HittableMovement>().Hit(minHitSpeed + (maxHitSpeed - minHitSpeed) * Mathf.Clamp(chargeTime, 0, maxChargeTime) / maxChargeTime, directionToMouse);
+
+                }
+            }
+        }
+
+        chargeTime = 0;
+        batterMovement.ResetSpeedMultiplier();
+    }
+
+    protected IEnumerator ApplySwingDelay() {
+        isSwinging = true;
+        yield return new WaitForEndOfFrame();
+        yield return new WaitForSeconds(batterAnimator.GetCurrentAnimatorStateInfo(0).length);
+        isSwinging = false;
+    }
+
 }

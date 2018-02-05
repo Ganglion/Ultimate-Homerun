@@ -6,6 +6,7 @@ public class BaseballMovement : HittableMovement {
 
     private float colliderRadius;
 
+    [Header("Baseball Movement")]
     [SerializeField]
     private float deceleration;
     [SerializeField]
@@ -13,13 +14,19 @@ public class BaseballMovement : HittableMovement {
     [SerializeField]
     private float yScaleMultiplier;
 
+    [Header("Baseball Hit")]
+    [SerializeField]
+    private float speedTransferMultiplier;
+    [SerializeField]
+    private float damageMultiplier;
+
     protected override void Awake() {
         base.Awake();
         colliderRadius = GetComponent<Collider2D>().bounds.extents.x;
     }
 
-    protected override void Hit(float speed, Vector2 unitDirection) {
-        objectRB.velocity = speed * unitDirection;
+    public override void Hit(float speed, Vector2 unitDirection) {
+        base.Hit(speed, unitDirection);
     }
 
     private void Update() {
@@ -31,14 +38,23 @@ public class BaseballMovement : HittableMovement {
         transform.localScale = new Vector3(xScale, yScale, transform.localScale.z);
     }
 
-    private void LateUpdate() {
+    private void FixedUpdate() {
         objectRB.velocity = Vector2.MoveTowards(objectRB.velocity, Vector2.zero, deceleration * Time.deltaTime);
 
-        RaycastHit2D reboundHit = Physics2D.Raycast(transform.position, objectRB.velocity, colliderRadius + objectRB.velocity.magnitude * Time.deltaTime, LayerMask.GetMask("Wall"));
-        if (reboundHit.collider != null) {
-            Vector2 reboundNormal = reboundHit.normal;
-            Vector2 reboundVelocity = Vector2.Reflect(objectRB.velocity, reboundNormal);
-            objectRB.velocity = reboundVelocity;
+        if (objectRB.velocity != Vector2.zero) {
+            RaycastHit2D reboundHit = Physics2D.CircleCast(transform.position, colliderRadius, objectRB.velocity, objectRB.velocity.magnitude * Time.deltaTime + 0.005f, LayerMask.GetMask("Wall", "Runner"));
+            if (reboundHit.collider != null) {
+                Transform hitObjectTransform = reboundHit.transform;
+                if (hitObjectTransform.gameObject.layer == LayerMask.NameToLayer("Runner")) {
+                    hitObjectTransform.GetComponent<RunnerLife>().TakeDamage(objectRB.velocity.magnitude * damageMultiplier);
+                    hitObjectTransform.GetComponent<Rigidbody2D>().velocity += objectRB.velocity * speedTransferMultiplier;
+                }
+                Vector2 reboundNormal = reboundHit.normal;
+                Vector2 reboundVelocity = Vector2.Reflect(objectRB.velocity, reboundNormal);
+                objectRB.velocity = reboundVelocity;
+
+                CameraController.Instance.ShakeCamera(0.03125f, .25f);
+            }
         }
     }
 

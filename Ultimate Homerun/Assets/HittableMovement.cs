@@ -10,8 +10,8 @@ public class HittableMovement : MonoBehaviour {
         objectRB = GetComponent<Rigidbody2D>();
     }
 
-    protected virtual void Hit(float speed, Vector2 direction) {
-
+    public virtual void Hit(float speed, Vector2 direction) {
+        objectRB.velocity = speed * direction.normalized;
     }
 
 }

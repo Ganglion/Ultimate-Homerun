@@ -5,6 +5,7 @@ using UnityEngine;
 public class TimeController : Singleton<TimeController> {
 
     private float initialTimeScale = 1;
+    private float initialFixedTimeScale = .01f;
     private List<TimeInstance> timeInstances;
 
     void Awake() {
@@ -23,6 +24,7 @@ public class TimeController : Singleton<TimeController> {
             }
         }
         Time.timeScale = currentTimeScale;
+        Time.fixedDeltaTime = initialFixedTimeScale * currentTimeScale;
     }
 
     public void SlowTime(float scale, float duration) {
