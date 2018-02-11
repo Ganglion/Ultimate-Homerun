@@ -6,6 +6,9 @@ public class BaseballMovement : HittableMovement {
 
     private float colliderRadius;
 
+    [SerializeField]
+    private GameObject wallHitEffect;
+
     [Header("Baseball Movement")]
     [SerializeField]
     private float deceleration;
@@ -48,6 +51,8 @@ public class BaseballMovement : HittableMovement {
                 if (hitObjectTransform.gameObject.layer == LayerMask.NameToLayer("Runner")) {
                     hitObjectTransform.GetComponent<RunnerLife>().TakeDamage(objectRB.velocity.magnitude * damageMultiplier);
                     hitObjectTransform.GetComponent<Rigidbody2D>().velocity += objectRB.velocity * speedTransferMultiplier;
+                } else {
+                    Instantiate(wallHitEffect, reboundHit.point, Quaternion.Euler(Vector3.zero));
                 }
                 Vector2 reboundNormal = reboundHit.normal;
                 Vector2 reboundVelocity = Vector2.Reflect(objectRB.velocity, reboundNormal);

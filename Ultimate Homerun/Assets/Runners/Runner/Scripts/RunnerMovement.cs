@@ -9,6 +9,8 @@ public class RunnerMovement : HittableMovement {
     [SerializeField]
     private float acceleration;
     [SerializeField]
+    private float deceleration;
+    [SerializeField]
     private float maxSpeed;
     [SerializeField]
     private float xScaleMultiplier;
@@ -17,9 +19,18 @@ public class RunnerMovement : HittableMovement {
     [SerializeField]
     private float speedIncrement;
 
+    [SerializeField]
+    private float minDirectionChangeInterval;
+    [SerializeField]
+    private float maxDirectionChangeInterval;
+
+    private float currentInterval;
+    private Vector2 moveDirection;
+
     protected override void Awake() {
         base.Awake();
         colliderRadius = GetComponent<Collider2D>().bounds.extents.x;
+        moveDirection = (GameController.Instance.Batter.position - transform.position).normalized;
     }
 
     public override void Hit(float speed, Vector2 direction) {
@@ -35,11 +46,23 @@ public class RunnerMovement : HittableMovement {
         transform.localScale = new Vector3(xScale, yScale, transform.localScale.z);
 
         maxSpeed += speedIncrement * Time.deltaTime;
+
+        if (currentInterval <= 0) {
+            moveDirection = (GameController.Instance.Batter.position - transform.position).normalized;
+            currentInterval += Random.Range(minDirectionChangeInterval, maxDirectionChangeInterval);
+        } else {
+            currentInterval -= Time.deltaTime;
+        }
+
+        if (objectRB.velocity.sqrMagnitude > Mathf.Pow(maxSpeed, 2)) {
+            objectRB.velocity = Vector2.MoveTowards(objectRB.velocity, moveDirection * maxSpeed, deceleration * Time.deltaTime);
+        } else {
+            objectRB.velocity = Vector2.MoveTowards(objectRB.velocity, moveDirection * maxSpeed, acceleration * Time.deltaTime);
+        }
+        
     }
 
     private void FixedUpdate() {
-        Vector2 directionToBatter = GameController.Instance.Batter.position - transform.position;
-        objectRB.velocity = Vector2.MoveTowards(objectRB.velocity, directionToBatter.normalized * maxSpeed, acceleration * Time.deltaTime);
 
         RaycastHit2D reboundHit = Physics2D.Raycast(transform.position, objectRB.velocity, colliderRadius + objectRB.velocity.magnitude * Time.deltaTime, LayerMask.GetMask("Wall"));
         if (reboundHit.collider != null) {

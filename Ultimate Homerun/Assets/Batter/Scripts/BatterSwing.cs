@@ -6,6 +6,14 @@ public class BatterSwing : MonoBehaviour {
 
     private BatterMovement batterMovement;
     private Animator batterAnimator;
+    private AudioSource batterAudioSource;
+
+    [SerializeField]
+    private AudioClip batHitSFX;
+    [SerializeField]
+    private AudioClip smashHitSFX;
+    [SerializeField]
+    private AudioClip batGlintSFX;
 
     [SerializeField]
     private GameObject swingHitEffect;
@@ -36,6 +44,7 @@ public class BatterSwing : MonoBehaviour {
     private void Awake() {
         batterMovement = GetComponent<BatterMovement>();
         batterAnimator = GetComponent<Animator>();
+        batterAudioSource = GetComponent<AudioSource>();
     }
 
 	private void Update () {
@@ -57,6 +66,7 @@ public class BatterSwing : MonoBehaviour {
             if (isCharging && chargeTime >= maxChargeTime) {
                 fullChargeEffect.Play();
                 isCharging = false;
+                batterAudioSource.PlayOneShot(batGlintSFX);
             }
             batterMovement.SetSpeedMultiplier(minSpeedMultiplier);
 
@@ -89,18 +99,17 @@ public class BatterSwing : MonoBehaviour {
         }
 
         if (objectsWithinSwingHitRadius.Length > 0) {
+            batterAudioSource.PlayOneShot(batHitSFX);
+
             float effectMultiplier = Mathf.Clamp(chargeTime - minChargeTimeForEffect, 0, maxChargeTime - minChargeTimeForEffect) / (maxChargeTime - minChargeTimeForEffect);
             CameraController.Instance.ShakeCamera(0.125f * effectMultiplier, .5f);
             TimeController.Instance.SlowTime(0.01f, 0.5f * effectMultiplier);
 
-            for (int i = 0; i < objectsWithinSwingHitRadius.Length; i++)
-            {
+            for (int i = 0; i < objectsWithinSwingHitRadius.Length; i++) {
                 Vector2 directionToObject = objectsWithinSwingHitRadius[i].transform.position - transform.position;
                 float angleToObject = Mathf.Atan2(directionToObject.y, directionToObject.x) * Mathf.Rad2Deg;
-                if (Mathf.Abs(Mathf.DeltaAngle(angleToObject, angleToMouse)) <= (hitAngle / 2))
-                {
+                if (Mathf.Abs(Mathf.DeltaAngle(angleToObject, angleToMouse)) <= (hitAngle / 2)) {
                     objectsWithinSwingHitRadius[i].GetComponent<HittableMovement>().Hit(minHitSpeed + (maxHitSpeed - minHitSpeed) * Mathf.Clamp(chargeTime, 0, maxChargeTime) / maxChargeTime, directionToMouse);
-
                 }
             }
         }

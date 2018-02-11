@@ -51,15 +51,122 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\BaseballMovement.cs" />
-     <Compile Include="Assets\BatterMovement.cs" />
-     <Compile Include="Assets\BatterSwing.cs" />
-     <Compile Include="Assets\CameraController.cs" />
-     <Compile Include="Assets\HittableMovement.cs" />
-     <Compile Include="Assets\ShakeInstance.cs" />
-     <Compile Include="Assets\Singleton.cs" />
-     <Compile Include="Assets\TimeController.cs" />
-     <Compile Include="Assets\TimeInstance.cs" />
+     <Compile Include="Assets\Batter\Animations\Singleton.cs" />
+     <Compile Include="Assets\Batter\Scripts\BaseballMovement.cs" />
+     <Compile Include="Assets\Batter\Scripts\BatterLife.cs" />
+     <Compile Include="Assets\Batter\Scripts\BatterMovement.cs" />
+     <Compile Include="Assets\Batter\Scripts\BatterSwing.cs" />
+     <Compile Include="Assets\Controllers\CameraController.cs" />
+     <Compile Include="Assets\Controllers\GameController.cs" />
+     <Compile Include="Assets\Controllers\ParticleSystemLightingController.cs" />
+     <Compile Include="Assets\Controllers\ScoreController.cs" />
+     <Compile Include="Assets\Controllers\ShakeInstance.cs" />
+     <Compile Include="Assets\Controllers\TimeController.cs" />
+     <Compile Include="Assets\Controllers\TimeInstance.cs" />
+     <Compile Include="Assets\JMO Assets\Cartoon FX\Demo\Assets\CFX_AutoStopLoopedEffect.cs" />
+     <Compile Include="Assets\JMO Assets\Cartoon FX\Demo\Assets\CFX_Demo_New.cs" />
+     <Compile Include="Assets\JMO Assets\Cartoon FX\Demo\Assets\CFX_Demo_RandomDir.cs" />
+     <Compile Include="Assets\JMO Assets\Cartoon FX\Demo\Assets\CFX_Demo_RandomDirectionTranslate.cs" />
+     <Compile Include="Assets\JMO Assets\Cartoon FX\Demo\Assets\CFX_Demo_RotateCamera.cs" />
+     <Compile Include="Assets\JMO Assets\Cartoon FX\Demo\Assets\CFX_Demo_Translate.cs" />
+     <Compile Include="Assets\JMO Assets\Cartoon FX\Scripts\CFX_AutoDestructShuriken.cs" />
+     <Compile Include="Assets\JMO Assets\Cartoon FX\Scripts\CFX_AutoRotate.cs" />
+     <Compile Include="Assets\JMO Assets\Cartoon FX\Scripts\CFX_LightFlicker.cs" />
+     <Compile Include="Assets\JMO Assets\Cartoon FX\Scripts\CFX_LightIntensityFade.cs" />
+     <Compile Include="Assets\PostProcessing\Runtime\Attributes\GetSetAttribute.cs" />
+     <Compile Include="Assets\PostProcessing\Runtime\Attributes\MinAttribute.cs" />
+     <Compile Include="Assets\PostProcessing\Runtime\Attributes\TrackballAttribute.cs" />
+     <Compile Include="Assets\PostProcessing\Runtime\Attributes\TrackballGroupAttribute.cs" />
+     <Compile Include="Assets\PostProcessing\Runtime\Components\AmbientOcclusionComponent.cs" />
+     <Compile Include="Assets\PostProcessing\Runtime\Components\BloomComponent.cs" />
+     <Compile Include="Assets\PostProcessing\Runtime\Components\BuiltinDebugViewsComponent.cs" />
+     <Compile Include="Assets\PostProcessing\Runtime\Components\ChromaticAberrationComponent.cs" />
+     <Compile Include="Assets\PostProcessing\Runtime\Components\ColorGradingComponent.cs" />
+     <Compile Include="Assets\PostProcessing\Runtime\Components\DepthOfFieldComponent.cs" />
+     <Compile Include="Assets\PostProcessing\Runtime\Components\DitheringComponent.cs" />
+     <Compile Include="Assets\PostProcessing\Runtime\Components\EyeAdaptationComponent.cs" />
+     <Compile Include="Assets\PostProcessing\Runtime\Components\FogComponent.cs" />
+     <Compile Include="Assets\PostProcessing\Runtime\Components\FxaaComponent.cs" />
+     <Compile Include="Assets\PostProcessing\Runtime\Components\GrainComponent.cs" />
+     <Compile Include="Assets\PostProcessing\Runtime\Components\MotionBlurComponent.cs" />
+     <Compile Include="Assets\PostProcessing\Runtime\Components\ScreenSpaceReflectionComponent.cs" />
+     <Compile Include="Assets\PostProcessing\Runtime\Components\TaaComponent.cs" />
+     <Compile Include="Assets\PostProcessing\Runtime\Components\UserLutComponent.cs" />
+     <Compile Include="Assets\PostProcessing\Runtime\Components\VignetteComponent.cs" />
+     <Compile Include="Assets\PostProcessing\Runtime\Models\AmbientOcclusionModel.cs" />
+     <Compile Include="Assets\PostProcessing\Runtime\Models\AntialiasingModel.cs" />
+     <Compile Include="Assets\PostProcessing\Runtime\Models\BloomModel.cs" />
+     <Compile Include="Assets\PostProcessing\Runtime\Models\BuiltinDebugViewsModel.cs" />
+     <Compile Include="Assets\PostProcessing\Runtime\Models\ChromaticAberrationModel.cs" />
+     <Compile Include="Assets\PostProcessing\Runtime\Models\ColorGradingModel.cs" />
+     <Compile Include="Assets\PostProcessing\Runtime\Models\DepthOfFieldModel.cs" />
+     <Compile Include="Assets\PostProcessing\Runtime\Models\DitheringModel.cs" />
+     <Compile Include="Assets\PostProcessing\Runtime\Models\EyeAdaptationModel.cs" />
+     <Compile Include="Assets\PostProcessing\Runtime\Models\FogModel.cs" />
+     <Compile Include="Assets\PostProcessing\Runtime\Models\GrainModel.cs" />
+     <Compile Include="Assets\PostProcessing\Runtime\Models\MotionBlurModel.cs" />
+     <Compile Include="Assets\PostProcessing\Runtime\Models\ScreenSpaceReflectionModel.cs" />
+     <Compile Include="Assets\PostProcessing\Runtime\Models\UserLutModel.cs" />
+     <Compile Include="Assets\PostProcessing\Runtime\Models\VignetteModel.cs" />
+     <Compile Include="Assets\PostProcessing\Runtime\PostProcessingBehaviour.cs" />
+     <Compile Include="Assets\PostProcessing\Runtime\PostProcessingComponent.cs" />
+     <Compile Include="Assets\PostProcessing\Runtime\PostProcessingContext.cs" />
+     <Compile Include="Assets\PostProcessing\Runtime\PostProcessingModel.cs" />
+     <Compile Include="Assets\PostProcessing\Runtime\PostProcessingProfile.cs" />
+     <Compile Include="Assets\PostProcessing\Runtime\Utils\ColorGradingCurve.cs" />
+     <Compile Include="Assets\PostProcessing\Runtime\Utils\GraphicsUtils.cs" />
+     <Compile Include="Assets\PostProcessing\Runtime\Utils\MaterialFactory.cs" />
+     <Compile Include="Assets\PostProcessing\Runtime\Utils\RenderTextureFactory.cs" />
+     <Compile Include="Assets\PostProcessing\Utilities\CustomMotionTexture\ExampleWheelController.cs" />
+     <Compile Include="Assets\Runners\HittableMovement.cs" />
+     <Compile Include="Assets\Runners\Runner\Scripts\RunnerLife.cs" />
+     <Compile Include="Assets\Runners\Runner\Scripts\RunnerMovement.cs" />
+     <None Include="Assets\PostProcessing\Resources\Shaders\DepthOfField.shader" />
+     <None Include="Assets\JMO Assets\Cartoon FX\Shaders\CFX3 Multiply Color.shader" />
+     <None Include="Assets\PostProcessing\Resources\Shaders\MotionBlur.cginc" />
+     <None Include="Assets\PostProcessing\Resources\Shaders\Fog.shader" />
+     <None Include="Assets\JMO Assets\Cartoon FX\Shaders\CFXM_MobileParticleAdd_Alpha8.shader" />
+     <None Include="Assets\PostProcessing\Editor Resources\Monitors\ParadeRender.shader" />
+     <None Include="Assets\PostProcessing\Resources\Shaders\LutGen.shader" />
+     <None Include="Assets\PostProcessing\Editor Resources\Monitors\HistogramRender.shader" />
+     <None Include="Assets\JMO Assets\Cartoon FX\CartoonFX Free.txt" />
+     <None Include="Assets\PostProcessing\Editor Resources\UI\CurveBackground.shader" />
+     <None Include="Assets\PostProcessing\Resources\Shaders\ScreenSpaceReflection.shader" />
+     <None Include="Assets\PostProcessing\Utilities\CustomMotionTexture\Shaders\CustomMotionVectorTexture.shader" />
+     <None Include="Assets\PostProcessing\Resources\Shaders\ACES.cginc" />
+     <None Include="Assets\PostProcessing\Resources\Shaders\UberSecondPass.cginc" />
+     <None Include="Assets\PostProcessing\Resources\Shaders\Tonemapping.cginc" />
+     <None Include="Assets\PostProcessing\Editor Resources\Monitors\HistogramCompute.compute" />
+     <None Include="Assets\PostProcessing\Resources\Shaders\Uber.shader" />
+     <None Include="Assets\PostProcessing\Resources\Shaders\Blit.shader" />
+     <None Include="Assets\PostProcessing\Editor Resources\Monitors\WaveformRender.shader" />
+     <None Include="Assets\PostProcessing\Editor Resources\Monitors\VectorscopeCompute.compute" />
+     <None Include="Assets\PostProcessing\Resources\Shaders\FXAA3.cginc" />
+     <None Include="Assets\PostProcessing\Resources\Shaders\MotionBlur.shader" />
+     <None Include="Assets\PostProcessing\Resources\Shaders\AmbientOcclusion.shader" />
+     <None Include="Assets\PostProcessing\Resources\Bluenoise64\LICENSE.txt" />
+     <None Include="Assets\PostProcessing\Resources\Shaders\BuiltinDebugViews.shader" />
+     <None Include="Assets\JMO Assets\Cartoon FX Easy Editor\CartoonFX Easy Editor Readme.txt" />
+     <None Include="Assets\PostProcessing\Resources\Shaders\Common.cginc" />
+     <None Include="Assets\PostProcessing\Resources\Bluenoise64\COPYING.txt" />
+     <None Include="Assets\PostProcessing\Editor Resources\UI\Trackball.shader" />
+     <None Include="Assets\JMO Assets\!JMO Assets Readme.txt" />
+     <None Include="Assets\PostProcessing\Resources\Shaders\Bloom.cginc" />
+     <None Include="Assets\PostProcessing\Resources\Shaders\TAA.shader" />
+     <None Include="Assets\PostProcessing\Resources\Shaders\EyeHistogram.compute" />
+     <None Include="Assets\PostProcessing\Resources\Shaders\TAA.cginc" />
+     <None Include="Assets\PostProcessing\Resources\Shaders\EyeAdaptation.cginc" />
+     <None Include="Assets\PostProcessing\Resources\Shaders\GrainGen.shader" />
+     <None Include="Assets\PostProcessing\Resources\Shaders\FXAA.shader" />
+     <None Include="Assets\PostProcessing\Resources\Shaders\DiskKernels.cginc" />
+     <None Include="Assets\PostProcessing\Resources\Shaders\DepthOfField.cginc" />
+     <None Include="Assets\PostProcessing\Resources\Shaders\ScreenSpaceRaytrace.cginc" />
+     <None Include="Assets\PostProcessing\Resources\Shaders\Bloom.shader" />
+     <None Include="Assets\PostProcessing\Editor Resources\Monitors\VectorscopeRender.shader" />
+     <None Include="Assets\PostProcessing\Resources\Shaders\EyeAdaptation.shader" />
+     <None Include="Assets\PostProcessing\Resources\Shaders\ColorGrading.cginc" />
+     <None Include="Assets\PostProcessing\Resources\Shaders\AmbientOcclusion.cginc" />
+     <None Include="Assets\PostProcessing\Editor Resources\Monitors\WaveformCompute.compute" />
  <Reference Include="UnityEngine.UI">
  <HintPath>D:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>
@@ -122,6 +229,12 @@
  </Reference>
  <Reference Include="UnityEditor.WindowsStandalone.Extensions">
  <HintPath>D:/Program Files/Unity/Editor/Data/PlaybackEngines/windowsstandalonesupport/UnityEditor.WindowsStandalone.Extensions.dll</HintPath>
+ </Reference>
+ <Reference Include="JMOAssets">
+ <HintPath>C:/Users/Luke/Desktop/Games/Ultimate Homerun/Ultimate Homerun/Assets/JMO Assets/Editor/JMOAssets.dll</HintPath>
+ </Reference>
+ <Reference Include="JMOAssets_CartoonFXFreeWelcome">
+ <HintPath>C:/Users/Luke/Desktop/Games/Ultimate Homerun/Ultimate Homerun/Assets/JMO Assets/Editor/JMOAssets_CartoonFXFreeWelcome.dll</HintPath>
  </Reference>
  <Reference Include="UnityEngine.Advertisements">
  <HintPath>C:/Users/Luke/AppData/LocalLow/Unity/cache/packages/packages.unity.com/com.unity.ads@2.0.3/UnityEngine.Advertisements.dll</HintPath>

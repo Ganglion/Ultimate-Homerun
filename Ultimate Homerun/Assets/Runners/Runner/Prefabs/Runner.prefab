@@ -283,11 +283,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 61bab1b4379c8dc418fe6fd752cfe0f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  acceleration: 24
+  acceleration: 0.33
+  deceleration: 24
   maxSpeed: 0.33
   xScaleMultiplier: 0.006666667
   yScaleMultiplier: -0.003333333
   speedIncrement: 0.01
+  minDirectionChangeInterval: 1.5
+  maxDirectionChangeInterval: 10
 --- !u!114 &114707137799527348
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3790,7 +3793,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 4
   m_Sprite: {fileID: 21300000, guid: aa24b959392b4bd4d94fd13b72ee5ccf, type: 3}
   m_Color: {r: 0.2509804, g: 0, b: 0.5019608, a: 1}
   m_FlipX: 0
